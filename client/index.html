@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bee-Quiet!</title>
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- external javascript -->
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/backbone/backbone-min.js"></script>
+    <!-- internal javascript -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/app.js"></script>
+    <!-- <script src="scripts/appBackbone.js"></script> -->
+  </head>
+  <body>
+
+    <div id="main">
+      <h1>Bee-Quiet !</h1>
+    </div>
+
+    <section id="textBox">
+      <input id="textField" placeholder="Your message" type="text" name="input_message" size="60">
+      <input id="submitButton" type="submit">
+      <input id="roomField" placeholder="Room" type="text" name="input_room">
+      <button id="refreshButton">Refresh</button>
+    </section>
+
+    <section id="chats">
+    </section>
+
+  </body>
+</html>

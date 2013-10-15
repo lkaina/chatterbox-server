@@ -1,5 +1,6 @@
 /* Import node's http module: */
 var http = require("http");
+var hr = require('./request-handler.js');
 
 /* This is the callback function that will be called each time a
  * client (i.e.. a web browser) makes a request to our server. */
@@ -52,7 +53,7 @@ var defaultCorsHeaders = {
  * normally already claimed by another server and/or not accessible to
  * user processes, so we'll use a higher port number that is not
  * likely to be taken: */
-var port = 8080;
+var port = 8081;
 
 /* For now, since you're running this server on your local machine,
  * we'll have it listen on the IP address 127.0.0.1, which is a
@@ -61,9 +62,10 @@ var ip = "127.0.0.1";
 
 /* Use node's http module to create a server and start it listening on
  * the given port and IP. */
-var server = http.createServer(requestListener);
+var server = http.createServer(hr.handleRequest);
 console.log("Listening on http://" + ip + ":" + port);
-server.listen(port, ip);
+//server.on('request', hr.handleRequest);
+server.listen(port);
 
 /* To start this server, run:
      node basic-server.js

@@ -1,0 +1,83 @@
+@import url(http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo);
+@import url(http://fonts.googleapis.com/css?family=Happy+Monkey);
+
+body {
+    background-image: url('http://cfile215.uf.daum.net/image/173FD0414EFACB202307D8');
+    background-size: 100%;
+    text-align: center;
+    padding: 0 25px;
+    font-family: 'Swanky and Moo Moo', cursive;
+}
+
+#main {
+    width: 270px;
+    margin: auto;
+    text-align: left;
+    background: rgb(200, 32, 38);
+    color: rgb(229, 229, 229);
+    border-radius: 23px;
+    border: 5px solid white;
+}
+
+#main h1 {
+    font-size: 48px;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#main ul {
+    padding-left: 20px;
+}
+
+#main .error {
+    border: 1px solid red;
+    background: #FDEFF0;
+    padding: 20px;
+}
+
+#main .success {
+    margin-top: 25px;
+}
+
+#main .success code {
+    font-size: 12px;
+    color: green;
+    line-height: 13px;
+}
+
+#textBox {
+    width: 620px;
+    margin: 10px auto 10px;
+    text-align: center;
+    height: 50px;
+    padding-top: 2%;
+}
+
+#chats {
+    background-color: white;
+    width: 620px;
+    height: auto;
+    min-height: 300px;
+    margin: auto;
+    padding: 6px 0px 15px;
+    opacity: 0.8;
+    border-radius: 15px;
+    font-family: 'Happy Monkey', cursive;
+    font-weight: bolder;
+}
+
+.msg {
+    background-color: white;
+    width: 600px;
+    margin: 2% 1.6%;
+}
+
+span {
+    cursor: pointer;
+}
+
+.friend {
+    font-weight: bold;
+    color: orange;
+}
