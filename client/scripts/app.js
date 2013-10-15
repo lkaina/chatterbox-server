@@ -1,12 +1,6 @@
 $(function(){
 
   var displayChats = function(dataObject){
-
-    // each message instantiated as BB model, call render
-    //   - var chat = new Chat({dataObject[0]});
-    //   - var cv = new ChatView({model: chat}).render();
-    //   - put models into BB collection
-    //   - add collection view, render collection which renders each model view in turn
     var $chats = $('#chats');
     $('#chats').html('');
     var roomname = $('#roomField').val();
@@ -39,16 +33,16 @@ $(function(){
 
   var getChats = function(){
     $.ajax({
-      url: 'http://127.0.0.1:8081/classes/chatterbox',
+      url: 'http://127.0.0.1:8081/chatterbox',
       type: 'GET',
-      dataType: 'jsonp',
-      contentType: 'application/jsonp',
-      data: {
-        order: '-createdAt'
-      },
+      dataType: 'json',
+      // contentType: 'application/json',
+      // data: {
+      //   order: '-createdAt'
+      // },
       success: function(data){
         displayChats(data);
-        console.log("chatterbox: Messages received");
+        console.log("chatterbox: Messages received", data);
       },
       error: function(data){
         console.log("ERROR: ", data);
@@ -57,7 +51,7 @@ $(function(){
   };
 
   var usernameIndex = window.location.href.indexOf("username=");
-  var username = window.location.href.slice(usernameIndex + 10);
+  var username = window.location.href.slice(usernameIndex + 9);
 
   $('#submitButton').on('click', function(){
     var messageRoom = $('#roomField').val();
@@ -65,15 +59,15 @@ $(function(){
     var message = { 'username': username, 'text': messageText, 'roomname': messageRoom };
     $('#textField').val('');
     $.ajax({
-      url: 'http://127.0.0.1:8081/classes/chatterbox',
+      url: 'http://127.0.0.1:8081/chatterbox',
       type: 'POST',
-      data: JSON.stringify(message),
-      contentType: 'application/jsonp',
+      data: message,
+      dataType: 'json',
       success: function (data) {
         console.log('chatterbox: Message sent', data);
       },
       error: function (data) {
-        console.error('chatterbox: Failed to send message');
+        console.error('chatterbox: Failed to send message', data);
       }
     });
   });
