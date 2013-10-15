@@ -1,12 +1,12 @@
 $(function(){
 
-  var displayChats = function(dataObject){
+  var displayChats = function(dataArray){
     var $chats = $('#chats');
     $('#chats').html('');
     var roomname = $('#roomField').val();
-    var messages = dataObject.results;
+    var messages = dataArray;
     if(roomname !== ''){
-      messages = _.filter(dataObject.results, function(result){
+      messages = _.filter(dataArray, function(result){
         console.log(result.roomname);
         if(result.roomname === roomname){
           return { text: result.text, username: result.username, roomname: result.roomname };
@@ -37,7 +37,6 @@ $(function(){
       url: 'http://127.0.0.1:8081/classes/'+roomName,
       type: 'GET',
       dataType: 'json',
-      // contentType: 'application/json',
       // data: {
       //   order: '-createdAt'
       // },

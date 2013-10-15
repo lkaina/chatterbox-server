@@ -31,7 +31,7 @@ exports.handleRequest = function(request, response) {
       request.on('end', function() {
         response.writeHead(201, headers);
         var ms = JSON.parse(message);
-        messages.push(ms);
+        messages.unshift(ms);
         response.end(JSON.stringify('ok'));
       });
     }
