@@ -32,8 +32,9 @@ $(function(){
   };
 
   var getChats = function(){
+    var roomName = $('#roomField').val();
     $.ajax({
-      url: 'http://127.0.0.1:8081/chatterbox',
+      url: 'http://127.0.0.1:8081/classes/'+roomName,
       type: 'GET',
       dataType: 'json',
       // contentType: 'application/json',
@@ -59,15 +60,12 @@ $(function(){
     var message = { 'username': username, 'text': messageText, 'roomname': messageRoom };
     $('#textField').val('');
     $.ajax({
-      url: 'http://127.0.0.1:8081/chatterbox',
+      url: 'http://127.0.0.1:8081/classes/'+messageRoom,
       type: 'POST',
-      data: message,
+      data: JSON.stringify(message),
       dataType: 'json',
       success: function (data) {
         console.log('chatterbox: Message sent', data);
-      },
-      error: function (data) {
-        console.error('chatterbox: Failed to send message', data);
       }
     });
   });
