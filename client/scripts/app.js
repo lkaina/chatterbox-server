@@ -6,12 +6,12 @@ $(function(){
     var roomname = $('#roomField').val();
     var messages = dataArray;
     if(roomname !== ''){
-      messages = _.filter(dataArray, function(result){
-        console.log(result.roomname);
+      for( var j = 0; j < messages.length; j++ ){
+        var result = messages[j];
         if(result.roomname === roomname){
           return { text: result.text, username: result.username, roomname: result.roomname };
         }
-      });
+      }
     }
     var len = messages.length;
     len = (len > 8) ? 8 : len;
@@ -24,7 +24,6 @@ $(function(){
       var $userHTML = $('<span>').addClass(username).text(username);
       var message = JSON.stringify(messages[i].text);
       roomname = JSON.stringify(messages[i].roomname);
-      // var $newHTML = $('<div>').addClass('msg').text("says " + message + " in " + roomname);
       var $newHTML = $('<div>').addClass('msg').text(message);
       $newHTML.prepend($userHTML.append("<br>"));
       $chats.append($newHTML.append("<hr>"));
@@ -34,12 +33,9 @@ $(function(){
   var getChats = function(){
     var roomName = $('#roomField').val();
     $.ajax({
-      url: 'http://127.0.0.1:8081/classes/'+roomName,
+      url: 'http://127.0.0.1:8081/index.html/classes/'+roomName,
       type: 'GET',
-      dataType: 'json',
-      // data: {
-      //   order: '-createdAt'
-      // },
+      contentType: 'application/json',
       success: function(data){
         displayChats(data);
         console.log("chatterbox: Messages received", data);
@@ -59,7 +55,7 @@ $(function(){
     var message = { 'username': username, 'text': messageText, 'roomname': messageRoom };
     $('#textField').val('');
     $.ajax({
-      url: 'http://127.0.0.1:8081/classes/'+messageRoom,
+      url: 'http://127.0.0.1:8081/index.html/classes/'+messageRoom,
       type: 'POST',
       data: JSON.stringify(message),
       dataType: 'json',

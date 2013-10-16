@@ -1,35 +1,82 @@
-/* Import node's http module: */
 var http = require("http");
 var hr = require('./request-handler.js');
 var fs = require('fs');
-
-/* Every server needs to listen on a port with a unique number. The
- * standard port for HTTP servers is port 80, but that port is
- * normally already claimed by another server and/or not accessible to
- * user processes, so we'll use a higher port number that is not
- * likely to be taken: */
 var port = 8081;
-
-/* For now, since you're running this server on your local machine,
- * we'll have it listen on the IP address 127.0.0.1, which is a
- * special address that always refers to localhost. */
 var ip = "127.0.0.1";
+var defaultCorsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, accept",
+  "access-control-max-age": 10
+};
 
-/* Use node's http module to create a server and start it listening on
- * the given port and IP. */
-fs.readFile('../client/index.html', function (err, html) {
-  if (err) {
-    throw err;
+var server = http.createServer(function(request, response) {
+
+  console.log('request starting ...');
+
+  if(request.url.indexOf('.html') !== -1){
+
+    fs.readFile('./client/index.html', function (err, data) {
+      if (err) console.log(err);
+      defaultCorsHeaders['Content-Type'] = 'text/html';
+      response.writeHead(200, defaultCorsHeaders);
+      response.write(data);
+      response.end();
+    });
+
   }
-  http.createServer(function(request, response) {
-    response.writeHeader(200, {"Content-Type": "text/html"});
-    response.write(html);
-    response.end();
-    response.writeHeader(200, {"Content-Type": "text/css"});
-    response.write(css);
-    response.end();
-  }).listen(port, ip);
+
+  if(request.url.indexOf('.css') !== -1){
+
+    fs.readFile('./client/styles/styles.css', function (err, data) {
+      if (err) console.log(err);
+      defaultCorsHeaders['Content-Type'] = 'text/css';
+      response.writeHead(200, defaultCorsHeaders);
+      response.write(data);
+      response.end();
+    });
+
+  }
+
+  if(request.url.indexOf('.js') !== -1){
+
+    fs.readFile('./client/bower_components/jquery/jquery.min.js', function (err, data) {
+      if (err) console.log(err);
+      defaultCorsHeaders['Content-Type'] = 'text/javascript';
+      response.writeHead(200, defaultCorsHeaders);
+      response.write(data);
+      response.end();
+    });
+
+
+    fs.readFile('./client/scripts/app.js', function (err, data) {
+      if (err) console.log(err);
+      defaultCorsHeaders['Content-Type'] = 'text/javascript';
+      response.writeHead(200, defaultCorsHeaders);
+      response.write(data);
+      response.end();
+    });
+
+    fs.readFile('./client/scripts/config.js', function (err, data) {
+      if (err) console.log(err);
+      defaultCorsHeaders['Content-Type'] = 'text/javascript';
+      response.writeHead(200, defaultCorsHeaders);
+      response.write(data);
+      response.end();
+    });
+
+    fs.readFile('./client/bower_components/underscore/underscore-min.js', function (err, data) {
+      if (err) console.log(err);
+      defaultCorsHeaders['Content-Type'] = 'text/javascript';
+      response.writeHead(200, defaultCorsHeaders);
+      response.write(data);
+      response.end();
+    });
+
+  }
 });
+
+server.listen(port, ip);
 // var server = http.createServer(function(req, res){
 
 // });
