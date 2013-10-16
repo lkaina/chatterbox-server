@@ -3,7 +3,28 @@ var url = require('url');
 
 var messages = [];
 
-exports.handleRequest = function(request, response) {
+// function css(response) {
+//   response.writeHead(200, {"Content-Type": "text/css"});
+
+//   var count = 0;
+//   var handler = function(error, content){
+//     count++;
+//     if (error){
+//       console.log(error);
+//     }
+//     else{
+//       response.write(content);
+//     }
+
+//     if (count == 2) {
+//       response.end();
+//     }
+//   };
+//   fs.readFile('./client/styles/styles.css', handler);
+//   fs.readFile('css/bootstrap-responsive.css', handler);
+// }
+
+exports.handleRequest = function(request, response, html) {
   var parsedUrl = url.parse(request.url);
   var pathname = parsedUrl.pathname;
   var parseRoom = pathname.split('/');
@@ -12,7 +33,9 @@ exports.handleRequest = function(request, response) {
   var statusCode = 200;
   var headers = defaultCorsHeaders;
 
-  debugger;
+  response.writeHead(200, {"Content-Type":"text/html"});
+  response.end(html);
+
   if( path !== 'classes' ){
     response.writeHead(404, headers);
     response.end();
