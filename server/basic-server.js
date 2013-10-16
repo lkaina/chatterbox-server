@@ -3,6 +3,7 @@ var hr = require('./request-handler.js');
 var fs = require('fs');
 var port = 8081;
 var ip = "127.0.0.1";
+
 var defaultCorsHeaders = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -11,69 +12,32 @@ var defaultCorsHeaders = {
 };
 
 var server = http.createServer(function(request, response) {
-
   console.log('request starting ...');
+  var extname = path.extname(request.url);
+  debugger;
+  var contentType = 'text/html';
+      switch (extname) {
+      case '.js':
+          contentType = 'text/javascript';
+          fileName = './client/app.js'
+          break;
+      case '.css':
+          contentType = 'text/css';
+          break;
+      }
 
-  if(request.url.indexOf('.html') !== -1){
+  fs.readFile('js/EmailDisplay/htm/index.html', function(error, content) {
+      if (error) {
+          console.log(error);
+          response.writeHead(500);
+          response.end();
+      } else {
+          console.log(contentType);
+          response.writeHead(200, {'Content-Type': contentType});
+          response.end(content,'utf-8');
+      }
+});
 
-    fs.readFile('./client/index.html', function (err, data) {
-      if (err) console.log(err);
-      defaultCorsHeaders['Content-Type'] = 'text/html';
-      response.writeHead(200, defaultCorsHeaders);
-      response.write(data);
-      response.end();
-    });
-
-  }
-
-  if(request.url.indexOf('.css') !== -1){
-
-    fs.readFile('./client/styles/styles.css', function (err, data) {
-      if (err) console.log(err);
-      defaultCorsHeaders['Content-Type'] = 'text/css';
-      response.writeHead(200, defaultCorsHeaders);
-      response.write(data);
-      response.end();
-    });
-
-  }
-
-  if(request.url.indexOf('.js') !== -1){
-
-    fs.readFile('./client/bower_components/jquery/jquery.min.js', function (err, data) {
-      if (err) console.log(err);
-      defaultCorsHeaders['Content-Type'] = 'text/javascript';
-      response.writeHead(200, defaultCorsHeaders);
-      response.write(data);
-      response.end();
-    });
-
-
-    fs.readFile('./client/scripts/app.js', function (err, data) {
-      if (err) console.log(err);
-      defaultCorsHeaders['Content-Type'] = 'text/javascript';
-      response.writeHead(200, defaultCorsHeaders);
-      response.write(data);
-      response.end();
-    });
-
-    fs.readFile('./client/scripts/config.js', function (err, data) {
-      if (err) console.log(err);
-      defaultCorsHeaders['Content-Type'] = 'text/javascript';
-      response.writeHead(200, defaultCorsHeaders);
-      response.write(data);
-      response.end();
-    });
-
-    fs.readFile('./client/bower_components/underscore/underscore-min.js', function (err, data) {
-      if (err) console.log(err);
-      defaultCorsHeaders['Content-Type'] = 'text/javascript';
-      response.writeHead(200, defaultCorsHeaders);
-      response.write(data);
-      response.end();
-    });
-
-  }
 });
 
 server.listen(port, ip);
